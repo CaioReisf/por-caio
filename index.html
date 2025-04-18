@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Caio Reis</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    /* Fade in on load */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeIn 1s forwards;
+    }
+
+    @keyframes fadeIn {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Scale on hover */
+    .hover-scale:hover {
+      transform: scale(1.05);
+      transition: transform 0.3s ease;
+    }
+
+    /* Light mode */
+    .light-mode {
+      background-color: #f4f4f4;
+      color: #111;
+    }
+
+    .light-mode .bg-gray-800 {
+      background-color: #fff;
+      color: #111;
+    }
+
+    .light-mode .text-gray-300 {
+      color: #333;
+    }
+
+    .light-mode .text-green-400 {
+      color: #007f5f;
+    }
+
+    .light-mode .bg-green-600 {
+      background-color: #007f5f;
+      color: white;
+    }
+
+    /* Typing effect */
+    .typing {
+      overflow: hidden;
+      border-right: 2px solid #4caf50;
+      white-space: nowrap;
+      animation: blink 0.7s step-end infinite;
+      display: inline-block;
+      max-width: 100%;
+    }
+
+    @keyframes blink {
+      50% { border-color: transparent; }
+    }
+  </style>
+</head>
+<body class="bg-gray-900 text-white font-sans p-6 transition-colors duration-500">
+
+  <!-- Botões -->
+  <div class="mb-6">
+    <button onclick="toggleTheme()" class="px-4 py-2 bg-green-600 rounded hover-scale mr-2">
+      🌙 / ☀️ Tema
+    </button>
+    <button onclick="toggleLanguage()" class="px-4 py-2 bg-green-600 rounded hover-scale">
+      🇬🇧 / 🇧🇷 Idioma
+    </button>
+  </div>
+
+  <div class="grid grid-cols-4 gap-4 max-w-6xl mx-auto">
+
+    <!-- Foto de Perfil -->
+    <div class="col-span-1 bg-gray-800 p-4 rounded-xl flex items-center justify-center fade-in hover-scale">
+      <img src="129194635.png" alt="Profile" class="rounded-lg">
+    </div>
+
+    <!-- Introdução -->
+    <div class="col-span-2 bg-gray-800 p-6 rounded-xl fade-in hover-scale">
+      <h1 id="typing" class="text-3xl font-bold mb-2 typing"></h1>
+      <p id="description" class="text-gray-300"></p>
+      <p class="mt-4 text-green-400">"Até logo, Cowboy Espacial..."</p>
+    </div>
+
+    <!-- Sobre mim -->
+    <div class="col-span-1 bg-gray-800 p-4 rounded-xl fade-in hover-scale">
+      <h2 id="aboutTitle" class="text-2xl font-bold mb-3"></h2>
+      <img src="about-photo.png" alt="About" class="rounded mb-3">
+      <p id="aboutText" class="text-gray-300 text-sm"></p>
+    </div>
+
+    <!-- App de Notas -->
+    <div class="col-span-2 bg-gray-800 p-4 rounded-xl fade-in hover-scale">
+      <h2 id="noteAppTitle" class="text-xl font-bold mb-2"></h2>
+      <div class="bg-gray-700 p-2 rounded mb-2">Live | GitHub</div>
+      <img src="note-preview.png" alt="Note App" class="rounded">
+    </div>
+
+    <!-- Imagem Anime -->
+    <div class="col-span-1 bg-gray-800 p-4 rounded-xl flex items-center justify-center fade-in hover-scale">
+      <img src="(heart)coma.gif" alt="Anime" class="rounded">
+    </div>
+
+    <!-- Linguagens -->
+    <div class="col-span-1 bg-gray-800 p-4 rounded-xl fade-in hover-scale">
+      <h2 id="languagesTitle" class="text-xl font-bold mb-3"></h2>
+      <div class="flex flex-wrap gap-2 text-sm">
+        <span class="bg-green-600 px-2 py-1 rounded">HTML</span>
+        <span class="bg-green-600 px-2 py-1 rounded">CSS</span>
+        <span class="bg-green-600 px-2 py-1 rounded">JavaScript</span>
+        <span class="bg-green-600 px-2 py-1 rounded">React</span>
+        <span class="bg-green-600 px-2 py-1 rounded">Node</span>
+        <span class="bg-green-600 px-2 py-1 rounded">MongoDB</span>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    // Alternar tema
+    function toggleTheme() {
+      document.body.classList.toggle("light-mode");
+    }
+
+    // Textos em PT e EN
+    const texts = {
+      en: {
+        title: "Hey! I'm Caio Reis",
+        description: "A Full-Stack Web Developer creating dynamic, user-friendly web experiences with precision and design.",
+        aboutTitle: "About Me",
+        aboutText: "Hello! My name is Caio Reis, I'm 21 years old and I'm a Systems Analysis and Development student. I work as a freelance graphic designer and front-end developer.",
+        noteAppTitle: "Note Taking App",
+        languagesTitle: "Languages"
+      },
+      pt: {
+        title: "Olá! Eu sou o Caio Reis",
+        description: "Desenvolvedor Full-Stack criando experiências web dinâmicas, amigáveis e bem projetadas.",
+        aboutTitle: "Sobre mim",
+        aboutText: "Olá! Meu nome é Caio Reis, tenho 21 anos e sou estudante de Análise e Desenvolvimento de Sistemas. Atuo como designer gráfico e desenvolvedor front-end freelancer.",
+        noteAppTitle: "Aplicativo de Notas",
+        languagesTitle: "Linguagens"
+      }
+    };
+
+    let currentLang = navigator.language.startsWith('pt') ? 'pt' : 'en';
+
+    // Efeito de escrever
+    function typeText(text, elementId, speed = 80, callback) {
+      const el = document.getElementById(elementId);
+      el.textContent = '';
+      let i = 0;
+      function type() {
+        if (i < text.length) {
+          el.textContent += text.charAt(i);
+          i++;
+          setTimeout(type, speed);
+        } else if (callback) {
+          callback();
+        }
+      }
+      type();
+    }
+
+    // Atualizar interface
+    function updateContent() {
+      const t = texts[currentLang];
+      typeText(t.title, 'typing', 60);
+      document.getElementById('description').textContent = t.description;
+      document.getElementById('aboutTitle').textContent = t.aboutTitle;
+      document.getElementById('aboutText').textContent = t.aboutText;
+      document.getElementById('noteAppTitle').textContent = t.noteAppTitle;
+      document.getElementById('languagesTitle').textContent = t.languagesTitle;
+    }
+
+    // Alternar idioma
+    function toggleLanguage() {
+      currentLang = (currentLang === 'en') ? 'pt' : 'en';
+      updateContent();
+    }
+
+    // Iniciar com conteúdo
+    updateContent();
+  </script>
+
+</body>
+</html>
