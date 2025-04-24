@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Caio Reis</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />   
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
   <style>
     .fade-in {
       opacity: 0;
@@ -53,23 +53,18 @@
     }
   </style>
 </head>
-
 <body class="bg-gray-900 text-white font-sans p-6 transition-colors duration-500 px-4">
 
   <!-- Botões -->
   <div class="mb-6 flex flex-wrap gap-2">
-    <button onclick="toggleTheme()" class="px-4 py-2 bg-green-600 rounded hover-scale">
-      🌙 / ☀️ Tema
-    </button>
-    <button onclick="toggleLanguage()" class="px-4 py-2 bg-green-600 rounded hover-scale">
-      🇬🇧 / 🇧🇷 Idioma
-    </button>
+    <button onclick="toggleTheme()" class="px-4 py-2 bg-green-600 rounded hover-scale">🌙 / ☀️ Tema</button>
+    <button onclick="toggleLanguage()" class="px-4 py-2 bg-green-600 rounded hover-scale">🇬🇧 / 🇧🇷 Idioma</button>
   </div>
 
-  <!-- Layout Responsivo -->
+  <!-- Conteúdo principal -->
   <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 max-w-6xl mx-auto">
-
-    <!-- Foto de Perfil -->
+    
+    <!-- Imagem de Perfil -->
     <div class="bg-gray-800 p-4 rounded-xl flex items-center justify-center fade-in hover-scale">
       <img src="129194635.png" alt="Profile" class="rounded-lg max-w-full h-auto">
     </div>
@@ -86,21 +81,37 @@
       <h2 id="aboutTitle" class="text-2xl font-bold mb-3"></h2>      
       <p id="aboutText" class="text-gray-300 text-sm"></p>
       <br>
-      <div class="larga">               
+      <div class="flex gap-3 text-xl">
         <a href="#"><i class="fa-brands fa-whatsapp"></i></a>
         <a href="#"><i class="fa-brands fa-linkedin"></i></a>
-        <a href="https://github.com/CaioReisf?tab=overview&from=2023-12-01&to=2023-12-31" target="_blank"><i class="fa-brands fa-git-alt"></i></a>
-    </div>
+        <a href="https://github.com/CaioReisf" target="_blank"><i class="fa-brands fa-git-alt"></i></a>
+      </div>
     </div>
 
-    <!-- App de Notas -->
+    <!-- Aplicativo -->
     <div class="bg-gray-800 p-4 rounded-xl fade-in hover-scale sm:col-span-1 lg:col-span-2">
-      <h2 id="noteAppTitle" class="text-xl font-bold mb-2"></h2>
-      <div class="bg-gray-700 p-2 rounded mb-2 text-center">Live | GitHub</div>
-      <img src="note-preview.png" alt="Note App" class="rounded max-w-full h-auto">
+      <h1 id="noteAppTitle" class="text-xl font-bold mb-2">Projetos</h1>      
+      <!-- Carousel -->
+      <div class="relative w-full h-60 overflow-hidden rounded-lg bg-black group">
+        <div id="carousel" class="flex transition-transform duration-700 ease-in-out w-full h-full">
+          <div class="min-w-full h-full flex justify-center items-center">
+            <a href="https://caioreisf.github.io/BoomBap/" target="_blank"><img src="boombap.png" alt="Slide 1" class="object-contain max-h-full max-w-full" /></a>
+          </div>
+          <div class="min-w-full h-full flex justify-center items-center">
+            <a href="https://caioreisf.github.io/climas-app/" target="_blank"><img src="climaappp.png" alt="Slide 2" class="object-contain max-h-full max-w-full" /></a>
+          </div>
+          <div class="min-w-full h-full flex justify-center items-center">
+            <a href="https://caioreisf.github.io/loud-valorant/" target="_blank"><img src="loud.png" alt="Slide 3" class="object-contain max-h-full max-w-full" /></a>
+          </div>
+        </div>
+
+        <!-- Controles -->
+        <button onclick="prevSlide()" class="absolute top-1/2 left-2 transform -translate-y-1/2 bg-black bg-opacity-50 text-white px-2 py-1 rounded hover:scale-105">&#10094;</button>
+        <button onclick="nextSlide()" class="absolute top-1/2 right-2 transform -translate-y-1/2 bg-black bg-opacity-50 text-white px-2 py-1 rounded hover:scale-105">&#10095;</button>
+      </div>
     </div>
 
-    <!-- Imagem Anime -->
+    <!-- Imagem Extra -->
     <div class="bg-gray-800 p-4 rounded-xl flex items-center justify-center fade-in hover-scale">
       <img src="(heart)coma.gif" alt="Anime" class="rounded max-w-full h-auto">
     </div>
@@ -117,30 +128,51 @@
         <span class="bg-green-600 px-2 py-1 rounded">MongoDB</span>
       </div>
     </div>
-
   </div>
 
   <script>
+    let currentIndex = 0;
+    const totalSlides = 3;
+    const carousel = document.getElementById('carousel');
+
+    function updateSlide() {
+      const offset = -currentIndex * 100;
+      carousel.style.transform = `translateX(${offset}%)`;
+    }
+
+    function nextSlide() {
+      currentIndex = (currentIndex + 1) % totalSlides;
+      updateSlide();
+    }
+
+    function prevSlide() {
+      currentIndex = (currentIndex - 1 + totalSlides) % totalSlides;
+      updateSlide();
+    }
+
+    setInterval(() => {
+      nextSlide();
+    }, 5000);
+
     function toggleTheme() {
       document.body.classList.toggle("light-mode");
     }
 
     const texts = {
       en: {
-        title: "Hey! I'm Caio Reis",        
+        title: "Hey! I'm Caio Reis",
         description: "A Full-Stack Web Developer creating dynamic, user-friendly web experiences with precision and design.",
         aboutTitle: "About Me",
         aboutText: "Hello! My name is Caio Reis, I'm 21 years old and I'm a Systems Analysis and Development student. I work as a freelance graphic designer and front-end developer.",
-        noteAppTitle: "Note Taking App",
+        noteAppTitle: "Projets",
         languagesTitle: "Languages"
-        
       },
       pt: {
         title: "Olá! Eu sou o Caio Reis",
         description: "Desenvolvedor Full-Stack criando experiências web dinâmicas, amigáveis e bem projetadas.",
         aboutTitle: "Sobre mim",
         aboutText: "Olá! Meu nome é Caio Reis, tenho 21 anos e sou estudante de Análise e Desenvolvimento de Sistemas. Atuo como designer gráfico e desenvolvedor front-end freelancer.",
-        noteAppTitle: "Aplicativo de Notas",
+        noteAppTitle: "Projetos",
         languagesTitle: "Linguagens"
       }
     };
@@ -180,6 +212,5 @@
 
     updateContent();
   </script>
-
 </body>
 </html>
